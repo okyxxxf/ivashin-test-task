@@ -1,0 +1,25 @@
+.note {
+    display: flex;
+    padding: 10px 20px;
+    border-radius: 20px 10px;
+    border: 2px solid #4096ff;
+    gap: 10px;
+    font-size: 16px;
+    justify-content: space-between;
+}
+
+.notes {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+.note__icons {
+    display: flex;
+    gap: 5px;
+}
+
+.note__icons > * {
+    cursor: pointer;
+}
