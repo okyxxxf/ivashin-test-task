@@ -5,13 +5,15 @@ import note from '../../types/note';
 import findTags from './findTags';
 
 interface NotesState {
-  notes : Array<note>
-  tags : Array<string>
+  notes : Array<note>,
+  tags : Array<string>,
+  filters : Array<string>,
 }
 
 const initialState: NotesState = {
   notes : [],
   tags : [],
+  filters : []
 }
 
 export const notesSlice = createSlice({
@@ -37,11 +39,36 @@ export const notesSlice = createSlice({
     },
     checkTags : (state) => {
       state.tags = findTags(state.notes);
+      state.filters.forEach((filter) => {
+        if (!state.tags.includes(filter)) {
+          const index = state.filters.findIndex((searchFilter) => searchFilter === filter);
+          state.filters = [...state.filters.slice(0, index), ...state.filters.slice(index + 1)];
+        }
+      })
+    },
+    addFilter : (state, action : PayloadAction<string>) => {
+      state.filters = [...state.filters, action.payload];
+    },
+    deleteFilter : (state, action : PayloadAction<string>) => {
+      const tagArray = action.payload.match(/#[a-zA-Zа-яА-Я0-9]{1,}/g) || [];
+
+      tagArray.forEach((tag) => {
+          const index = state.filters.findIndex((filter) => filter === tag);
+          state.filters = [...state.filters.slice(0, index), ...state.filters.slice(index + 1)];
+      });
     },
   },
 });
 
-export const {addNote, deleteNote, enableEditMode, disableEditMode, checkTags} = notesSlice.actions;
+export const {
+  addNote, 
+  deleteNote, 
+  enableEditMode, 
+  disableEditMode, 
+  checkTags, 
+  addFilter, 
+  deleteFilter
+} = notesSlice.actions;
 
 export const selectNotes = (state: RootState) => state.notes.notes;
 

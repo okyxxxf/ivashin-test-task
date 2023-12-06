@@ -6,6 +6,7 @@
     transition: 0.6s;
 }
 
-.tag:hover {
+.tag.active {
     background: #4096ff;
 }
+
