@@ -18,10 +18,7 @@ const Note = ({i , text} : noteProps) => {
 					dispatch(deleteNote({note : text, index: i}));
 					dispatch(checkTags());
 				}}/>
-				<EditTwoTone onClick={() => {
-					dispatch(enableEditMode({note : text, index: i}));
-					dispatch(checkTags());
-				}}/>
+				<EditTwoTone onClick={() => dispatch(enableEditMode({note : text, index: i}))}/>
 			</div>
 		</li> 
 	)
