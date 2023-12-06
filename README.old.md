@@ -1,1 +1,0 @@
-# ivashin-test-task

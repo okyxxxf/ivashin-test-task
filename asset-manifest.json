@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/ivashin-test-task/static/css/main.7d895313.css",
+    "main.js": "/ivashin-test-task/static/js/main.49913eba.js",
+    "index.html": "/ivashin-test-task/index.html",
+    "main.7d895313.css.map": "/ivashin-test-task/static/css/main.7d895313.css.map",
+    "main.49913eba.js.map": "/ivashin-test-task/static/js/main.49913eba.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7d895313.css",
+    "static/js/main.49913eba.js"
+  ]
+}
