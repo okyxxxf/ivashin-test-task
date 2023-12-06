@@ -3,6 +3,7 @@ import { RootState } from '../../store/store';
 import notePayload from '../../types/notePayload';
 import note from '../../types/note';
 import findTags from './findTags';
+import updateLocalStorage from './updateLocalStorage';
 
 interface NotesState {
   notes : Array<note>,
@@ -11,7 +12,7 @@ interface NotesState {
 }
 
 const initialState: NotesState = {
-  notes : [],
+  notes : JSON.parse(localStorage['notes']) || [],
   tags : [],
   filters : []
 }
@@ -22,10 +23,12 @@ export const notesSlice = createSlice({
   reducers: {
     addNote : (state, action : PayloadAction<string>) => {
 			state.notes = [...state.notes, {text : action.payload, is_edit : false}];
+      updateLocalStorage(state.notes);
     },
 		deleteNote : (state, action : PayloadAction<notePayload>) => {
 			const index = action.payload.index;
 			state.notes = [...state.notes.slice(0, index), ...state.notes.slice(index + 1)];
+      updateLocalStorage(state.notes);
 		},
 		enableEditMode : (state, action : PayloadAction<notePayload>) => {
       const index = action.payload.index;
@@ -36,6 +39,7 @@ export const notesSlice = createSlice({
       const index = action.payload.index;
       const newNote : note = {text : action.payload.note, is_edit : false};
 			state.notes = [...state.notes.slice(0, index), newNote, ...state.notes.slice(index + 1)];
+      updateLocalStorage(state.notes);
     },
     checkTags : (state) => {
       state.tags = findTags(state.notes);
