@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Input } from 'antd';
 import './addNotesPanel.css';
 import { useAppDispatch } from '../../hooks/hooks';
-import { addNote } from '../../features/notes/notesSlice';
+import { addNote, checkTags } from '../../features/notes/notesSlice';
 
 const AddNotesPanel = () => {	
 	const [value, changeValue] = useState<string>();
@@ -17,7 +17,11 @@ const AddNotesPanel = () => {
 			onChange={(e) => changeValue(e.target.value)} 
 			value={value}/>
 			<Button type="primary"
-			onClick={() => {dispatch(addNote(value!));}}
+			onClick={() => {
+				if (!value) return;
+				dispatch(addNote(value!));
+				dispatch(checkTags());
+			}}
 			>Add note</Button>
 		</div>
 	)

@@ -9,16 +9,17 @@ const Notes = () => {
 	const notes = useAppSelector(state => state.notes.notes);
 
 	const notesRender = notes.map(({text, is_edit} : note, i : number) => {
-		if (!is_edit) {
+		if (is_edit) {
 			return (
-				<EditNote i={i} text={text}/>
+				<EditNote i={i} text={text} key={i}/>
 			)
 		} else  {
 			return (
-				<Note i={i} text={text}/>
+				<Note i={i} text={text} key={i}/>
 			)
 		}
 	});
+
 	return (
 		<ul className="notes">
 			{notesRender}

@@ -23,3 +23,7 @@
 .note__icons > * {
     cursor: pointer;
 }
+
+.tagged {
+    color: #52c41a;
+}

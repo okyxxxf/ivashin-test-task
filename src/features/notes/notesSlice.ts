@@ -2,13 +2,16 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
 import notePayload from '../../types/notePayload';
 import note from '../../types/note';
+import findTags from './findTags';
 
 interface NotesState {
   notes : Array<note>
+  tags : Array<string>
 }
 
 const initialState: NotesState = {
-  notes : []
+  notes : [],
+  tags : [],
 }
 
 export const notesSlice = createSlice({
@@ -18,8 +21,8 @@ export const notesSlice = createSlice({
     addNote : (state, action : PayloadAction<string>) => {
 			state.notes = [...state.notes, {text : action.payload, is_edit : false}];
     },
-		deleteNote : (state, action : PayloadAction<number>) => {
-			const index = action.payload;
+		deleteNote : (state, action : PayloadAction<notePayload>) => {
+			const index = action.payload.index;
 			state.notes = [...state.notes.slice(0, index), ...state.notes.slice(index + 1)];
 		},
 		enableEditMode : (state, action : PayloadAction<notePayload>) => {
@@ -30,12 +33,15 @@ export const notesSlice = createSlice({
     disableEditMode : (state, action : PayloadAction<notePayload>) => {
       const index = action.payload.index;
       const newNote : note = {text : action.payload.note, is_edit : false};
-			state.notes = [...state.notes.slice(0, index), newNote, ...state.notes.slice(index + 1)]
+			state.notes = [...state.notes.slice(0, index), newNote, ...state.notes.slice(index + 1)];
+    },
+    checkTags : (state) => {
+      state.tags = findTags(state.notes);
     },
   },
 });
 
-export const {addNote, deleteNote, enableEditMode, disableEditMode} = notesSlice.actions;
+export const {addNote, deleteNote, enableEditMode, disableEditMode, checkTags} = notesSlice.actions;
 
 export const selectNotes = (state: RootState) => state.notes.notes;
 
