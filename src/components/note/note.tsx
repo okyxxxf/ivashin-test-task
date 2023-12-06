@@ -1,7 +1,7 @@
 import React from "react";
 import { DeleteTwoTone, EditTwoTone } from "@ant-design/icons";
 import { useAppDispatch } from "../../hooks/hooks";
-import { deleteNote, enableEditMode } from "../../features/notes/notesSlice";
+import { checkTags, deleteNote, enableEditMode } from "../../features/notes/notesSlice";
 
 interface noteProps {
 	i : number,
@@ -14,8 +14,14 @@ const Note = ({i , text} : noteProps) => {
 		<li className="note" key={i}>
 			{text}
 			<div className="note__icons">
-				<DeleteTwoTone onClick={() => dispatch(deleteNote({note : text, index: i}))}/>
-				<EditTwoTone onClick={() => dispatch(enableEditMode({note : text, index: i}))}/>
+				<DeleteTwoTone onClick={() => {
+					dispatch(deleteNote({note : text, index: i}));
+					dispatch(checkTags());
+				}}/>
+				<EditTwoTone onClick={() => {
+					dispatch(enableEditMode({note : text, index: i}));
+					dispatch(checkTags());
+				}}/>
 			</div>
 		</li> 
 	)
