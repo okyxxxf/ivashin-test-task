@@ -21,6 +21,7 @@ const AddNotesPanel = () => {
 				if (!value) return;
 				dispatch(addNote(value!));
 				dispatch(checkTags());
+				changeValue('');
 			}}
 			>Add note</Button>
 		</div>
