@@ -11,8 +11,10 @@ interface NotesState {
   filters : Array<string>,
 }
 
+const startNotes = localStorage.getItem('notes') ? localStorage['notes'] : [];
+
 const initialState: NotesState = {
-  notes : JSON.parse(localStorage['notes']) || [],
+  notes : startNotes[0]  ? JSON.parse(startNotes) : [],
   tags : [],
   filters : []
 }
